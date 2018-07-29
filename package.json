@@ -18,12 +18,17 @@
   },
   "homepage": "https://github.com/adambeck7/Language-Interpretation-and-Recognition-Interface#readme",
   "dependencies": {
+    "bluebird": "^3.5.1",
     "dotenv": "^6.0.0",
     "file-system": "^2.2.2",
     "image-downloader": "^3.4.1",
+    "jQuery": "^1.7.4",
+    "jsdom": "^11.12.0",
+    "node-cmd": "^3.0.0",
     "node-spotify-api": "^1.0.7",
     "request": "^2.87.0",
     "terminal-image": "^0.1.1",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "xmlhttprequest": "^1.8.0"
   }
 }

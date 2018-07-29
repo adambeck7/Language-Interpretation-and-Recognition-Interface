@@ -1,10 +1,9 @@
 // console.log('this is loaded');
+// console.log(process.env.NYT_KEY)
+// console.log(process.env.SPOTIFY_ID)
 
-exports.twitter = {
-  consumer_key: process.env.TWITTER_CONSUMER_KEY,
-  consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-  access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-  access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+exports.nyt = {
+  key: process.env.NYT_KEY
 };
 
 exports.spotify = {
