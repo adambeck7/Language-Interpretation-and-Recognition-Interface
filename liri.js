@@ -8,110 +8,47 @@ const download = require("image-downloader");
 const request = require("request");
 const fs = require("fs");
 var arr = [];
-var globalData;
-// const cmd = require('node-cmd');
-// const Promise = require('bluebird');
-// const $ = require('jquery');
+
+
 
 if (process.argv[2] == "spotify-this-song") {
-  var song = "";
-  for (var i = 3; i < process.argv.length; i++) {
-    // Build a string with the address.
-    song = song + " " + process.argv[i];
-
-    // query.join(' ');
-    // query = song[i].concat()
-    console.log(song);
-  }
-  // console.log('song ', song);
-  if (song == "") {
-    song = "The Sign";
-    console.log("blank query= ", song);
-  }
-  spotify.search({
-      type: "track",
-      query: song,
-      limit: 1
-    },
-    function (err, data) {
-      if (err) {
-        return console.log("Error occurred: " + err);
-      }
-      console.log("");
-      console.log("Your results");
-      // console.log(data.tracks.items[0]);
-      console.log("***********************************************");
-      console.log("Artist:", data.tracks.items[0].album.artists[0].name);
-      console.log("Song:", data.tracks.items[0].name);
-      console.log("Listen to a clip here:", data.tracks.items[0].preview_url);
-      console.log("Album:", data.tracks.items[0].album.name);
-      console.log("Image:", data.tracks.items[0].album.images[0].url);
-      console.log("***********************************************");
-
-      // (async () => {
-      //     const options = {
-      //         url: data.tracks.items[0].album.images[0].url,
-      //         dest: './images/image.jpg' // Save to /path/to/dest/image.jpg
-      //     }
-      //     // console.log(count)
-      //     download.image(options)
-      //         .then(({
-      //             filename,
-      //             image
-      //         }) => {
-      //             console.log('File saved to', filename)
-      //         })
-      //         .catch((err) => {
-      //             console.error(err)
-      //         })
-      //     console.log(await terminalImage.file('images/image.jpg'));
-      // })();
-      const options = {
-        url: data.tracks.items[0].album.images[0].url,
-        dest: "./images/image.jpg"
-      };
-
-      async function downloadIMG() {
-        try {
-          const {
-            filename,
-            image
-          } = await download.image(options);
-          console.log(await terminalImage.file("images/image.jpg")); // => /path/to/dest/image.jpg
-        } catch (e) {
-          console.error(e);
-        }
-      }
-
-      downloadIMG();
-    }
-  );
+  getSpotify();
 } else if (process.argv[2] == "movie-this") {
   getMovie();
   // ...
+} else if (process.argv[2] == "search-nyt") {
+  nytInfo();
 } else if (process.argv[2] == "do-what-it-says") {
   fs.readFile("random.txt", "utf8", function (error, data) {
     if (error) {
       return console.log(error);
     }
-    var arr = data.split(" ")
+    var arr = data.split(" ");
+    var arr2 = data.split(" ");
+    arr2.shift();
+    var str = arr2.toString();
+    str2 = str.replace(/,/g, " ")
+    // console.log(str2);
+
     // console.log(arr[0]);
     if (arr[0] == 'spotify-this-song') {
-      getSpotify();
+      getSpotify(str2);
     } else if (arr[0] == "movie-this") {
-      getMovie();
+      getMovie(str2);
     } else if (arr[0] == "search-nyt") {
-      getInfo();
+      nytInfo(str2);
     }
 
   });
 
-} else if (process.argv[2] == "search-nyt") {
-  nytInfo();
 }
 
-function nytInfo() {
+
+function nytInfo(str2) {
   var keyword = "";
+  if (str2) {
+    keyword = str2
+  }
   array = process.argv;
   process.argv.shift(); // skip node.exe
   process.argv.shift(); // skip name of js file
@@ -136,8 +73,11 @@ function nytInfo() {
   })
 }
 
-function getMovie() {
+function getMovie(str2) {
   var movieName = "";
+  if (str2) {
+    movieName = str2
+  }
   array = process.argv;
   process.argv.shift(); // skip node.exe
   process.argv.shift(); // skip name of js file
@@ -196,18 +136,19 @@ function getMovie() {
   });
 }
 
-function getSpotify() {
-
+function getSpotify(str2) {
   var song = "";
-  // for (var i = 3; i < process.argv.length; i++) {
-  // Build a string with the address.
-  //   song = song + " " + process.argv[i];
+  if (str2) {
+    song = str2
+  }
 
-  //   // query.join(' ');
-  //   // query = song[i].concat()
-  //   console.log(song);
-  // }
-  // console.log('song ', song);
+  for (var i = 3; i < process.argv.length; i++) {
+    song = song + " " + process.argv[i];
+    // query.join(' ');
+    // query = song[i].concat()
+    // console.log(song);
+  }
+  console.log('song ', song);
   if (song == "") {
     song = "The Sign";
     console.log("blank query= ", song);
@@ -231,25 +172,6 @@ function getSpotify() {
       console.log("Album:", data.tracks.items[0].album.name);
       console.log("Image:", data.tracks.items[0].album.images[0].url);
       console.log("***********************************************");
-
-      // (async () => {
-      //     const options = {
-      //         url: data.tracks.items[0].album.images[0].url,
-      //         dest: './images/image.jpg' // Save to /path/to/dest/image.jpg
-      //     }
-      //     // console.log(count)
-      //     download.image(options)
-      //         .then(({
-      //             filename,
-      //             image
-      //         }) => {
-      //             console.log('File saved to', filename)
-      //         })
-      //         .catch((err) => {
-      //             console.error(err)
-      //         })
-      //     console.log(await terminalImage.file('images/image.jpg'));
-      // })();
       const options = {
         url: data.tracks.items[0].album.images[0].url,
         dest: "./images/image.jpg"
