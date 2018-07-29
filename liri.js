@@ -7,7 +7,7 @@ const terminalImage = require("terminal-image");
 const download = require("image-downloader");
 const request = require("request");
 const fs = require("fs");
-var arr = [];
+
 
 
 
@@ -48,12 +48,15 @@ function nytInfo(str2) {
   var keyword = "";
   if (str2) {
     keyword = str2
+  } else {
+    array = process.argv;
+    process.argv.shift(); // skip node.exe
+    process.argv.shift(); // skip name of js file
+    process.argv.shift(); // skip search-nyt
+    keyword = process.argv.join("-");
   }
-  array = process.argv;
-  process.argv.shift(); // skip node.exe
-  process.argv.shift(); // skip name of js file
-  process.argv.shift(); // skip search-nyt
-  keyword = process.argv.join("-");
+  // console.log('keyword:', keyword);
+  // console.log('str2:', str2)
 
   request.get({
     url: "https://api.nytimes.com/svc/search/v2/articlesearch.json",
@@ -77,12 +80,14 @@ function getMovie(str2) {
   var movieName = "";
   if (str2) {
     movieName = str2
+  } else {
+    array = process.argv;
+    process.argv.shift(); // skip node.exe
+    process.argv.shift(); // skip name of js file
+    process.argv.shift(); // skip movie-this
+    movieName = process.argv.join("-");
   }
-  array = process.argv;
-  process.argv.shift(); // skip node.exe
-  process.argv.shift(); // skip name of js file
-  process.argv.shift(); // skip movie-this
-  movieName = process.argv.join("-");
+
   if (movieName == "") {
     movieName = "Mr-Nobody";
     console.log("blank query= ", movieName);
@@ -113,7 +118,7 @@ function getMovie(str2) {
         url: JSON.parse(body).Poster,
         dest: "./images/image.jpg"
       };
-
+      //add image to terminal
       async function downloadIMG() {
         try {
           const {
@@ -148,7 +153,7 @@ function getSpotify(str2) {
     // query = song[i].concat()
     // console.log(song);
   }
-  console.log('song ', song);
+  console.log('song:', song);
   if (song == "") {
     song = "The Sign";
     console.log("blank query= ", song);
